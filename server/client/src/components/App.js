@@ -2,14 +2,16 @@ import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import {BrowserRouter, Route} from 'react-router-dom';
 import Header from './Header'
-
+import * as actions from '../actions'
 import Dashboard from './Dashboard'
 import SurveyNew from './surveys/SurveyNew'
-const Landing= () => <h2>Landing</h2>
+import Landing from './Landing'
 
 
 class App extends Component {
-
+  componentDidMount(){
+    this.props.fetchUser();
+  }
   render() {
     return (
       <div className="container">
@@ -26,4 +28,4 @@ class App extends Component {
   }
 }
 
-export default connect(null)(App);
+export default connect(null, actions)(App);

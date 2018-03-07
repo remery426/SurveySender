@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { reduxForm, Field } from 'redux-form/immutable';
+import { reduxForm, Field } from 'redux-form';
 
 
 class SurveyForm extends Component {
