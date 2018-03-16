@@ -14,7 +14,7 @@ class Header extends Component {
         return [
           <div>
           <li key ="1"> <Payments/> </li>,
-          <li key="3" style={{margin: '0 10px'}}> Credits: {this.props.auth.credits} </li>
+          <li key="3" style={{margin: '0 10pxe'}}> Credits: {this.props.auth.credits} </li>
           <li key ="2"> <a href= '/api/logout'> Logout </a></li>
           </div>
         ];
@@ -42,4 +42,4 @@ class Header extends Component {
 function mapStateToProps({auth}){
   return {auth}
 }
-export default connect(mapStateToProps) (Header);
+export default connect(mapStateToProps)(Header);
