@@ -9,10 +9,14 @@ const _ = require('lodash');
 const Path = require('path-parser')
 const {URL} = require('url')
 module.exports = (app)=>{
+  app.get('/api/surveys/drafts',requireLogin, async(req,res)=>{
+    const drafts = await Survey.find({_user:req.user.id, draft:true})
+    res.send(drafts)
+  })
   app.get('/api/surveys', requireLogin, async (req,res)=>{
-    const surveys = await Survey.find({_user:req.user.id })
+    const surveys = await Survey.find({_user:req.user.id, draft: false })
       .select({recipients: false});
-    
+
     res.send(surveys);
 
   })
@@ -21,15 +25,17 @@ module.exports = (app)=>{
   })
   app.post('/api/surveys', requireLogin, checkCredits, async (req,res)=>{
 
-    const {title, subject, body, recipients} = req.body;
+    const {title, subject, body, recipients, draft} = req.body;
     const survey = new Survey({
       title,
       body,
       subject,
+      draft,
       recipients: recipients.split(',').map(email => ({ email: email.trim() })),
       _user: req.user.id,
       dateSent: Date.now()
     });
+    if(!draft){
     const mailer = new Mailer(survey,surveyTemplate(survey));
     try{
     await mailer.send();
@@ -40,6 +46,11 @@ module.exports = (app)=>{
   }catch(err){
     res.status(422).send(err);
   }
+}
+else{
+  await survey.save();
+  res.send()
+}
 
   });
   app.post('/api/surveys/webhooks', (req,res)=>{
