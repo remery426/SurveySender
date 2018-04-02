@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-
 const requireLogin = require('../middlewares/requireLogin')
 const checkCredits = require('../middlewares/checkCredits')
 const Survey = mongoose.model('surveys')

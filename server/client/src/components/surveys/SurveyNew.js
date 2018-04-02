@@ -14,7 +14,7 @@ class SurveyNew extends Component {
   onSurveySubmit(values,history){
 
     if(values.draft == true){
-      return(this.props.dispatch(this.props.submitSurvey(values,history)))
+    return(this.props.submitSurvey(values,history))
     }
     else{
       this.setState({showReview: true})
